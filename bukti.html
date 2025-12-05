@@ -3,101 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bukti Trade | RAM Goal</title>
+    <title>Galeri Bukti | RAM Goal</title>
     <style>
-        /* --- CSS Style --- */
-        :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --text-primary: #c9d1d9;
-            --neon-blue: #58a6ff;
-            --accent-green: #238636;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: 'Consolas', 'Courier New', monospace;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .back-btn {
-            display: inline-block;
-            text-decoration: none;
-            color: var(--neon-blue);
-            margin-bottom: 20px;
-            font-weight: bold;
-            border: 1px solid var(--neon-blue);
-            padding: 10px 15px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-        .back-btn:hover { background-color: rgba(88, 166, 255, 0.1); }
-
-        .proof-card {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid #30363d;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-
-        .proof-title {
-            margin: 0 0 15px 0;
-            color: var(--accent-green);
-            border-bottom: 1px solid #30363d;
-            padding-bottom: 10px;
-        }
-
-        .trade-img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            border: 2px solid #30363d;
-        }
-
-        .caption {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #8b949e;
-            font-style: italic;
-        }
+        /* CSS SAMA SEPERTI SEBELUMNYA */
+        :root { --bg: #0d1117; --card: #161b22; --text: #c9d1d9; --blue: #58a6ff; --green: #238636; }
+        body { background: var(--bg); color: var(--text); font-family: monospace; padding: 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 600px; }
+        .back-btn { display: inline-block; color: var(--blue); margin-bottom: 20px; text-decoration: none; border: 1px solid var(--blue); padding: 10px; border-radius: 8px; }
+        
+        .proof-card { background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #30363d; margin-bottom: 20px; }
+        .proof-title { color: var(--green); margin-top: 0; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
+        .trade-img { width: 100%; border-radius: 8px; border: 2px solid #30363d; }
+        .caption { color: #8b949e; font-style: italic; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <a href="index.html" class="back-btn">← Kembali ke Dashboard</a>
-
         <h1>📸 Galeri Bukti Cuan</h1>
 
-        <div class="proof-card">
-            <h2 class="proof-title">🔥 RESOLV/USDT (+45%)</h2>
-            
-            <img src="resolv.jpg" alt="Bukti Trade RESOLV" class="trade-img" onerror="this.style.display='none'; alert('Gambar resolv.jpg tidak ditemukan/salah nama!');">
-            
-            <p class="caption">Catatan: Sniper entry di pucuk resistance (0.08059).</p>
-        </div>
-
-        <div class="proof-card">
-            <h2 class="proof-title">🛡️ BOB/USDT (+17.9%)</h2>
-            
-            <img src="bob.jpg" alt="Bukti Trade BOB" class="trade-img" onerror="this.style.display='none';">
-            
-            <p class="caption">Catatan: Disiplin cut manual saat BTC pump.</p>
-        </div>
-
+        <div id="galeri-otomatis">Loading data...</div>
     </div>
 
+    <script>
+        // --- OTAK OTOMATISNYA DI SINI ---
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                const wadah = document.getElementById('galeri-otomatis');
+                wadah.innerHTML = ''; // Bersihkan tulisan loading
+
+                // Perulangan (Looping) untuk setiap data di JSON
+                data.forEach(item => {
+                    const htmlKartu = `
+                        <div class="proof-card">
+                            <h2 class="proof-title">${item.judul} (${item.profit})</h2>
+                            <img src="${item.gambar}" alt="Bukti" class="trade-img" onerror="this.style.display='none'">
+                            <p class="caption">Catatan: ${item.catatan}</p>
+                        </div>
+                    `;
+                    wadah.innerHTML += htmlKartu; // Masukkan ke layar
+                });
+            })
+            .catch(error => {
+                document.getElementById('galeri-otomatis').innerHTML = 'Gagal memuat data. Pastikan file data.json ada!';
+            });
+    </script>
 </body>
 </html>
