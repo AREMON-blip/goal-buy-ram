@@ -110,7 +110,8 @@
 
         async function updateData() {
             try {
-                const response = await fetch('data.json');
+               // Pake trik '?t=' biar browser selalu ambil data terbaru
+                const response = await fetch('data.json?t=' + new Date().getTime());
                 const data = await response.json();
 
                 let totalCuan = 0;
@@ -173,5 +174,6 @@
     </script>
 </body>
 </html>
+
 
 
