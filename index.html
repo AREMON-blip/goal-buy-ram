@@ -166,7 +166,8 @@
     
 <script>
         // --- CONFIGURATION ---
-        const modalAwal = 6.82; // Modal bersih kamu
+        // Modal Awal (Saldo sebelum profit hari ini)
+        const modalAwal = 6.82; 
         const hargaRAM = 45.00;
 
         async function updateData() {
@@ -178,21 +179,21 @@
                 // 2. Siapkan Wadah
                 let totalCuan = 0;
                 const listWadah = document.getElementById('riwayat-otomatis');
-                listWadah.innerHTML = ''; // Bersihkan tulisan loading
+                listWadah.innerHTML = ''; 
 
-                // 3. LOOPING: Proses setiap data trade
+                // 3. LOOPING
                 data.forEach(trade => {
-                    // Hitung Total Saldo
+                    // Hitung Total Saldo (Tetap jalan di background)
                     if (trade.cuan) {
                         totalCuan += trade.cuan;
                     }
 
-                    // BIKIN LIST VISUAL (Tanpa Simbol $)
-                    // Format: Angka Cuan + Persen Profit
+                    // --- BAGIAN INI YANG DIUBAH ---
+                    // Kita hapus "${trade.cuan}" biar cuma persen yang muncul
                     const htmlItem = `
                         <li class="history-item">
                             <span>${trade.judul}</span>
-                            <span class="win">+ ${trade.cuan} (${trade.profit})</span>
+                            <span class="win">${trade.profit}</span>
                         </li>
                     `;
                     listWadah.innerHTML += htmlItem;
@@ -209,7 +210,7 @@
                 document.getElementById('ramProgress').style.width = progress + "%";
                 document.getElementById('progressText').innerText = progress.toFixed(1) + "%";
 
-                console.log("System Updated. Clean Mode Active.");
+                console.log("System Updated. Privacy Mode Active.");
 
             } catch (error) {
                 console.error("Error:", error);
@@ -221,6 +222,7 @@
     </script>
 </body>
 </html>
+
 
 
 
