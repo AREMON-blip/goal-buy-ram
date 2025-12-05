@@ -170,20 +170,18 @@
         <button class="btn-refresh" onclick="updateData()">🔄 Sync Data Terbaru</button>
     </div>
 
-    <script>
-        // --- SETTINGAN DATA KEUANGAN ---
-        // Kamu tinggal update angka 'profitTotal' ini kalau cuan lagi
-        const modalAwal = 10.00;
-        const profitTotal = 0.59 + 0.18; // Update ini manual nanti
+   <script>
+        // --- DATA KEUANGAN REAL ---
+        // Masukkan saldo total kamu di sini (Manual)
+        const totalSaldo = 7.59; 
         
-        const totalSaldo = modalAwal + profitTotal;
-        const hargaRAM = 45.00; // Target harga RAM
+        const hargaRAM = 45.00; // Target harga RAM ($45)
 
         function updateData() {
             // Update Angka di Layar
             document.getElementById('currentBalance').innerText = totalSaldo.toFixed(2);
             
-            // Hitung Persen
+            // Hitung Persen Progress
             let progress = (totalSaldo / hargaRAM) * 100;
             if(progress > 100) progress = 100;
 
@@ -191,12 +189,13 @@
             document.getElementById('ramProgress').style.width = progress + "%";
             document.getElementById('progressText').innerText = progress.toFixed(1) + "%";
             
-            console.log("Data Synced. Balance: $" + totalSaldo);
+            console.log("Data Synced. Real Balance: $" + totalSaldo);
         }
 
-        // Jalankan otomatis saat web dibuka
+        // Jalankan otomatis
         setTimeout(updateData, 500);
     </script>
 </body>
 </html>
+
 
