@@ -1,16 +1,65 @@
 [
     {
-        "judul": "🔥 RESOLV/USDT",
+        "judul": "🐕 DOGE (01 Dec)",
+        "profit": "-18.31%",
+        "cuan": -0.13,
+        "gambar": "",
+        "catatan": "Awal perjalanan (Loss)."
+    },
+    {
+        "judul": "🛡️ ZEC (02 Dec)",
+        "profit": "-3.97%",
+        "cuan": -0.03,
+        "gambar": "",
+        "catatan": "Cutloss tipis."
+    },
+    {
+        "judul": "🛡️ ZEC (02 Dec)",
+        "profit": "+8.38%",
+        "cuan": 0.08,
+        "gambar": "",
+        "catatan": "Balik modal dikit."
+    },
+    {
+        "judul": "📉 EIGEN (02 Dec)",
+        "profit": "-19.42%",
+        "cuan": -0.19,
+        "gambar": "",
+        "catatan": "Loss lagi."
+    },
+    {
+        "judul": "🔥 RESOLV (03 Dec)",
+        "profit": "-10.70%",
+        "cuan": -0.10,
+        "gambar": "",
+        "catatan": "Kena gocek."
+    },
+    {
+        "judul": "🔥 RESOLV (03 Dec)",
+        "profit": "+10.30%",
+        "cuan": 0.10,
+        "gambar": "",
+        "catatan": "Balas dendam sukses."
+    },
+    {
+        "judul": "🔥 RESOLV (04 Dec)",
+        "profit": "-13%",
+        "cuan": -0.25,
+        "gambar": "",
+        "catatan": "Loss terbesar (Pelajaran)."
+    },
+    {
+        "judul": "🔥 RESOLV (05 Dec)",
         "profit": "+44.33%",
         "cuan": 0.59,
         "gambar": "resolv.jpg",
-        "catatan": "Sniper entry di pucuk resistance."
+        "catatan": "Sniper entry (Comeback Is Real)."
     },
     {
-        "judul": "🛡️ BOB/USDT",
+        "judul": "🛡️ BOB (05 Dec)",
         "profit": "+17.81%",
-        "cuan": 0.17,
+        "cuan": 0.18,
         "gambar": "bob.jpg",
-        "catatan": "Disiplin cut manual saat BTC pump."
+        "catatan": "Disiplin cut manual."
     }
 ]
