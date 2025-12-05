@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pro Trader Dashboard | RAM Goal</title>
     <style>
-        /* --- CSS (The Skin) --- */
+        /* --- CSS (Design System) --- */
         :root {
             --bg-color: #0d1117;
             --card-bg: #161b22;
             --text-primary: #c9d1d9;
             --text-secondary: #8b949e;
-            --accent-green: #238636; /* Warna Profit */
-            --accent-red: #da3633;   /* Warna Loss */
+            --accent-green: #238636;
+            --accent-red: #da3633;
             --neon-blue: #58a6ff;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-primary);
-            font-family: 'Consolas', 'Courier New', monospace; /* Font ala Coder */
+            font-family: 'Consolas', 'Courier New', monospace;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -47,6 +47,17 @@
 
         .header h1 { margin: 0; font-size: 1.5rem; color: var(--neon-blue); }
         .header span { font-size: 0.8rem; color: var(--text-secondary); }
+
+        /* Styling Gambar RAM */
+        .ram-display {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid var(--neon-blue);
+            margin: 15px auto; /* Auto biar di tengah */
+            box-shadow: 0 0 15px rgba(88, 166, 255, 0.2);
+            display: block;
+        }
 
         .balance-card {
             background: linear-gradient(145deg, #1c2128, #11151c);
@@ -80,41 +91,39 @@
         .progress-bar-fill {
             background-color: var(--neon-blue);
             height: 100%;
-            width: 0%; /* Nanti diisi JS */
+            width: 0%;
             transition: width 1s ease-in-out;
         }
 
-        .history-list {
-            list-style: none;
-            padding: 0;
-        }
-
+        .history-list { list-style: none; padding: 0; }
         .history-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #21262d;
-            font-size: 0.9rem;
+            display: flex; justify-content: space-between; padding: 10px 0;
+            border-bottom: 1px solid #21262d; font-size: 0.9rem;
         }
-
         .history-item:last-child { border-bottom: none; }
-        .win { color: #3fb950; }
-        .loss { color: var(--accent-red); }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--accent-green);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
+        .win { color: #3fb950; font-weight: bold; }
+        
+        /* Tombol Navigasi */
+        .btn-link {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background-color: #21262d;
+            color: var(--text-primary);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #30363d;
             transition: 0.3s;
         }
-        .btn:hover { background-color: #2ea043; }
+        .btn-link:hover { background-color: #30363d; border-color: var(--text-secondary); }
 
+        .btn-refresh {
+            width: 100%; padding: 12px; background-color: var(--accent-green);
+            color: white; border: none; border-radius: 6px; font-weight: bold;
+            cursor: pointer; margin-top: 5px; transition: 0.3s;
+        }
+        .btn-refresh:hover { background-color: #2ea043; }
     </style>
 </head>
 <body>
@@ -123,21 +132,20 @@
         <div class="header">
             <h1>🚀 RAM Goal Tracker</h1>
             
-            <div style="text-align: center; margin: 15px 0;">
-            <img src="ram.jpg" alt="Target RAM" style="width: 150px; border-radius: 10px; border: 2px solid #58a6ff; box-shadow: 0 0 15px rgba(88, 166, 255, 0.4);">
-        </div>
+            <img src="ram.jpg" alt="Target RAM" class="ram-display" onerror="this.style.display='none'">
+            
             <span>Target: 8GB / 16GB DDR4</span>
         </div>
 
         <div class="balance-card">
             <div class="balance-title">Total Tabungan (Est)</div>
             <div class="balance-amount">$<span id="currentBalance">0.00</span></div>
-            <span class="profit-tag">Win Rate: 100% (Hari Ini)</span>
+            <span class="profit-tag">Status: WIN STREAK (2-0) 🔥</span>
         </div>
 
         <div class="goal-section">
             <div class="goal-label">
-                <span>Progress Beli RAM ($45 Target)</span>
+                <span>Progress ($45 Target)</span>
                 <span id="progressText">0%</span>
             </div>
             <div class="progress-bar-bg">
@@ -145,58 +153,49 @@
             </div>
         </div>
 
-        <h3>Riwayat Hari Ini</h3>
+        <h3>Riwayat (05 Dec)</h3>
         <ul class="history-list">
             <li class="history-item">
-                <span>RESOLV/USDT (Short)</span>
-                <span class="win">+ $0.59 (45%)</span> </li>
+                <span>RESOLV (Short)</span>
+                <span class="win">+ $0.59 (45%)</span>
+            </li>
             <li class="history-item">
-                <span>BOB/USDT (Short)</span>
-                <span class="win">+ $0.18 (17.9%)</span> </li>
+                <span>BOB (Short)</span>
+                <span class="win">+ $0.18 (17.9%)</span>
+            </li>
         </ul>
-        
+        <br>
 
-        <a href="bukti.html" class="btn" style="text-align: center; text-decoration: none; display: block; background-color: #30363d; margin-bottom: 10px;">
-            📂 TRADE
-        </a>
-
-        <button class="btn" onclick="updateData()">🔄 Sync Data Terbaru</button>
+        <a href="bukti.html" class="btn-link">📂 Lihat Galeri Bukti Cuan</a>
+        <button class="btn-refresh" onclick="updateData()">🔄 Sync Data Terbaru</button>
     </div>
 
     <script>
-        // --- JavaScript (The Brain) ---
+        // --- SETTINGAN DATA KEUANGAN ---
+        // Kamu tinggal update angka 'profitTotal' ini kalau cuan lagi
+        const modalAwal = 10.00;
+        const profitTotal = 0.59 + 0.18; // Update ini manual nanti
         
-        // Data Simulasi (Bisa diganti nanti pake database beneran)
-        let totalSaldo = 10.00; // Misal saldo awal $10
-        const profitHariIni = 0.59 + 0.18; // Profit RESOLV + BOB
-        const hargaRAM = 45.00; // Harga RAM kisaran Rp700rb-an ($45)
+        const totalSaldo = modalAwal + profitTotal;
+        const hargaRAM = 45.00; // Target harga RAM
 
         function updateData() {
-            // Update Saldo
-            let currentTotal = totalSaldo + profitHariIni;
-            document.getElementById('currentBalance').innerText = currentTotal.toFixed(2);
-
-            // Hitung Persentase ke Goal
-            let progress = (currentTotal / hargaRAM) * 100;
+            // Update Angka di Layar
+            document.getElementById('currentBalance').innerText = totalSaldo.toFixed(2);
             
-            // Batasi max 100% biar ga tumpah
+            // Hitung Persen
+            let progress = (totalSaldo / hargaRAM) * 100;
             if(progress > 100) progress = 100;
 
-            // Animasi Bar
+            // Update Grafik Bar
             document.getElementById('ramProgress').style.width = progress + "%";
             document.getElementById('progressText').innerText = progress.toFixed(1) + "%";
-
-            // Efek visual console (Ala Hacker)
-            console.log("System Updated...");
-            console.log("New Balance: " + currentTotal);
+            
+            console.log("Data Synced. Balance: $" + totalSaldo);
         }
 
-        // Jalankan otomatis pas web dibuka
+        // Jalankan otomatis saat web dibuka
         setTimeout(updateData, 500);
-
     </script>
 </body>
 </html>
-
-
-
