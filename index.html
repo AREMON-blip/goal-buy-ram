@@ -163,53 +163,65 @@
         <a href="bukti.html" class="btn-link">📂 Lihat Galeri Bukti Cuan</a>
         <button class="btn-refresh" onclick="updateData()">🔄 Sync Data Terbaru</button>
     </div>
-
-  <script>
-        // --- SETTINGAN MODAL ---
-        // Masukkan Uang Deposit (Modal Bersih sebelum trading) di sini
-        const modalAwal = 6.82; 
+    
+<script>
+        // --- CONFIGURATION ---
+        const modalAwal = 6.82; // Modal bersih kamu
         const hargaRAM = 45.00;
 
-        // Fungsi Update Otomatis
         async function updateData() {
             try {
-                // 1. Ambil data dari JSON
+                // 1. Ambil Database
                 const response = await fetch('data.json');
                 const data = await response.json();
 
-                // 2. Hitung Total Cuan Otomatis
+                // 2. Siapkan Wadah
                 let totalCuan = 0;
+                const listWadah = document.getElementById('riwayat-otomatis');
+                listWadah.innerHTML = ''; // Bersihkan tulisan loading
+
+                // 3. LOOPING: Proses setiap data trade
                 data.forEach(trade => {
-                    // Kalau ada data 'cuan', tambahkan. Kalau gak ada, anggap 0.
+                    // Hitung Total Saldo
                     if (trade.cuan) {
                         totalCuan += trade.cuan;
                     }
+
+                    // BIKIN LIST VISUAL (Tanpa Simbol $)
+                    // Format: Angka Cuan + Persen Profit
+                    const htmlItem = `
+                        <li class="history-item">
+                            <span>${trade.judul}</span>
+                            <span class="win">+ ${trade.cuan} (${trade.profit})</span>
+                        </li>
+                    `;
+                    listWadah.innerHTML += htmlItem;
                 });
 
-                // 3. Hitung Saldo Akhir (Modal + Cuan)
+                // 4. Update Saldo & Progress Bar
                 const saldoAkhir = modalAwal + totalCuan;
-
-                // 4. Tampilkan ke Layar
+                
                 document.getElementById('currentBalance').innerText = saldoAkhir.toFixed(2);
                 
-                // 5. Update Progress Bar
                 let progress = (saldoAkhir / hargaRAM) * 100;
                 if(progress > 100) progress = 100;
+                
                 document.getElementById('ramProgress').style.width = progress + "%";
                 document.getElementById('progressText').innerText = progress.toFixed(1) + "%";
 
-                console.log(`Data Synced. Modal: $${modalAwal} + Cuan: $${totalCuan.toFixed(2)} = Total: $${saldoAkhir.toFixed(2)}`);
-            
+                console.log("System Updated. Clean Mode Active.");
+
             } catch (error) {
-                console.error("Gagal baca data:", error);
+                console.error("Error:", error);
+                document.getElementById('riwayat-otomatis').innerHTML = '<li style="color:red">Gagal baca data.json</li>';
             }
         }
 
-        // Jalankan
         updateData();
     </script>
 </body>
 </html>
+
 
 
 
