@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bukti Trade | RAM Goal</title>
+    <style>
+        /* --- CSS Sama dengan Dashboard Utama --- */
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-primary: #c9d1d9;
+            --neon-blue: #58a6ff;
+            --accent-green: #238636;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Consolas', 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px; /* Lebih lebar biar gambar jelas */
+        }
+
+        /* Tombol Kembali */
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+            font-weight: bold;
+            border: 1px solid var(--neon-blue);
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background-color: rgba(88, 166, 255, 0.1); }
+
+        /* Kartu Bukti */
+        .proof-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #30363d;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .proof-title {
+            margin: 0 0 15px 0;
+            color: var(--accent-green);
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 10px;
+        }
+
+        /* Gaya Gambar Bukti */
+        .trade-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid #30363d;
+        }
+
+        .caption {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #8b949e;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">← Kembali ke Dashboard</a>
+
+        <h1>📸 Galeri Bukti Cuan</h1>
+
+        <div class="proof-card">
+            <h2 class="proof-title">🔥 RESOLV/USDT (+45%)</h2>
+            <img src="bukti-resolv.jpg" alt="Bukti Trade RESOLV" class="trade-img" onerror="this.style.display='none'; alert('Gambar bukti-resolv.jpg belum diupload!');">
+            <p class="caption">Catatan: Sniper entry di pucuk resistance (0.08059).</p>
+        </div>
+
+        <div class="proof-card">
+            <h2 class="proof-title">🛡️ BOB/USDT (+17.9%)</h2>
+            <img src="bukti-bob.jpg" alt="Bukti Trade BOB" class="trade-img" onerror="this.style.display='none'; alert('Gambar bukti-bob.jpg belum diupload!');">
+            <p class="caption">Catatan: Disiplin cut manual saat BTC pump.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
