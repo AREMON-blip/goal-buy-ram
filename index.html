@@ -170,32 +170,52 @@
         <button class="btn-refresh" onclick="updateData()">🔄 Sync Data Terbaru</button>
     </div>
 
-   <script>
-        // --- DATA KEUANGAN REAL ---
-        // Masukkan saldo total kamu di sini (Manual)
-        const totalSaldo = 7.59; 
-        
-        const hargaRAM = 45.00; // Target harga RAM ($45)
+  <script>
+        // --- SETTINGAN MODAL ---
+        // Masukkan Uang Deposit (Modal Bersih sebelum trading) di sini
+        const modalAwal = 6.82; 
+        const hargaRAM = 45.00;
 
-        function updateData() {
-            // Update Angka di Layar
-            document.getElementById('currentBalance').innerText = totalSaldo.toFixed(2);
-            
-            // Hitung Persen Progress
-            let progress = (totalSaldo / hargaRAM) * 100;
-            if(progress > 100) progress = 100;
+        // Fungsi Update Otomatis
+        async function updateData() {
+            try {
+                // 1. Ambil data dari JSON
+                const response = await fetch('data.json');
+                const data = await response.json();
 
-            // Update Grafik Bar
-            document.getElementById('ramProgress').style.width = progress + "%";
-            document.getElementById('progressText').innerText = progress.toFixed(1) + "%";
+                // 2. Hitung Total Cuan Otomatis
+                let totalCuan = 0;
+                data.forEach(trade => {
+                    // Kalau ada data 'cuan', tambahkan. Kalau gak ada, anggap 0.
+                    if (trade.cuan) {
+                        totalCuan += trade.cuan;
+                    }
+                });
+
+                // 3. Hitung Saldo Akhir (Modal + Cuan)
+                const saldoAkhir = modalAwal + totalCuan;
+
+                // 4. Tampilkan ke Layar
+                document.getElementById('currentBalance').innerText = saldoAkhir.toFixed(2);
+                
+                // 5. Update Progress Bar
+                let progress = (saldoAkhir / hargaRAM) * 100;
+                if(progress > 100) progress = 100;
+                document.getElementById('ramProgress').style.width = progress + "%";
+                document.getElementById('progressText').innerText = progress.toFixed(1) + "%";
+
+                console.log(`Data Synced. Modal: $${modalAwal} + Cuan: $${totalCuan.toFixed(2)} = Total: $${saldoAkhir.toFixed(2)}`);
             
-            console.log("Data Synced. Real Balance: $" + totalSaldo);
+            } catch (error) {
+                console.error("Gagal baca data:", error);
+            }
         }
 
-        // Jalankan otomatis
-        setTimeout(updateData, 500);
+        // Jalankan
+        updateData();
     </script>
 </body>
 </html>
+
 
 
