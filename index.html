@@ -3,121 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRADE FOR BUY RAM</title>
+    <title>Pro Trader Dashboard | RAM Goal</title>
     <style>
-        /* --- CSS (Design System) --- */
         :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --text-primary: #c9d1d9;
-            --text-secondary: #8b949e;
-            --accent-green: #238636;
-            --accent-red: #da3633;
-            --neon-blue: #58a6ff;
+            --bg-color: #0d1117; --card-bg: #161b22; --text-primary: #c9d1d9;
+            --text-secondary: #8b949e; --accent-green: #238636; --accent-red: #da3633; --neon-blue: #58a6ff;
         }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
+            background-color: var(--bg-color); color: var(--text-primary);
             font-family: 'Consolas', 'Courier New', monospace;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            margin: 0; padding: 20px; display: flex; justify-content: center;
+            align-items: center; min-height: 100vh;
         }
-
         .dashboard {
-            background-color: var(--card-bg);
-            width: 100%;
-            max-width: 400px;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            background-color: var(--card-bg); width: 100%; max-width: 400px;
+            padding: 25px; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.5);
             border: 1px solid #30363d;
         }
-
-        .header {
-            text-align: center;
-            border-bottom: 1px solid #30363d;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
+        .header { text-align: center; border-bottom: 1px solid #30363d; padding-bottom: 15px; margin-bottom: 20px; }
         .header h1 { margin: 0; font-size: 1.5rem; color: var(--neon-blue); }
         .header span { font-size: 0.8rem; color: var(--text-secondary); }
-
-        /* Styling Gambar RAM */
         .ram-display {
-            width: 150px;
-            height: auto;
-            border-radius: 10px;
-            border: 2px solid var(--neon-blue);
-            margin: 15px auto; /* Auto biar di tengah */
-            box-shadow: 0 0 15px rgba(88, 166, 255, 0.2);
-            display: block;
+            width: 150px; height: auto; border-radius: 10px; border: 2px solid var(--neon-blue);
+            margin: 15px auto; box-shadow: 0 0 15px rgba(88, 166, 255, 0.2); display: block;
         }
-
         .balance-card {
-            background: linear-gradient(145deg, #1c2128, #11151c);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 20px;
-            border-left: 5px solid var(--accent-green);
+            background: linear-gradient(145deg, #1c2128, #11151c); padding: 20px;
+            border-radius: 12px; text-align: center; margin-bottom: 20px;
+            border-left: 5px solid var(--neon-blue); /* Warna Netral */
         }
-
         .balance-title { font-size: 0.9rem; color: var(--text-secondary); }
         .balance-amount { font-size: 2.5rem; font-weight: bold; margin: 10px 0; }
         .profit-tag { 
-            background-color: rgba(35, 134, 54, 0.2); 
-            color: #3fb950; 
-            padding: 2px 8px; 
-            border-radius: 4px; 
-            font-size: 0.8rem;
+            background-color: rgba(88, 166, 255, 0.2); color: var(--neon-blue); 
+            padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;
         }
-
         .goal-section { margin-bottom: 20px; }
         .goal-label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px; }
-        
-        .progress-bar-bg {
-            background-color: #30363d;
-            height: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            background-color: var(--neon-blue);
-            height: 100%;
-            width: 0%;
-            transition: width 1s ease-in-out;
-        }
-
+        .progress-bar-bg { background-color: #30363d; height: 10px; border-radius: 5px; overflow: hidden; }
+        .progress-bar-fill { background-color: var(--neon-blue); height: 100%; width: 0%; transition: width 1s ease-in-out; }
         .history-list { list-style: none; padding: 0; }
         .history-item {
             display: flex; justify-content: space-between; padding: 10px 0;
             border-bottom: 1px solid #21262d; font-size: 0.9rem;
         }
         .history-item:last-child { border-bottom: none; }
-        .win { color: #3fb950; font-weight: bold; }
         
-        /* Tombol Navigasi */
+        /* WARNA WARNI PROFIT/LOSS */
+        .win { color: #3fb950; font-weight: bold; }
+        .loss { color: #f85149; font-weight: bold; }
+
         .btn-link {
-            display: block;
-            text-align: center;
-            text-decoration: none;
-            background-color: #21262d;
-            color: var(--text-primary);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #30363d;
-            transition: 0.3s;
+            display: block; text-align: center; text-decoration: none;
+            background-color: #21262d; color: var(--text-primary); padding: 10px;
+            border-radius: 8px; margin-bottom: 10px; border: 1px solid #30363d; transition: 0.3s;
         }
         .btn-link:hover { background-color: #30363d; border-color: var(--text-secondary); }
-
         .btn-refresh {
             width: 100%; padding: 12px; background-color: var(--accent-green);
             color: white; border: none; border-radius: 6px; font-weight: bold;
@@ -131,16 +72,14 @@
     <div class="dashboard">
         <div class="header">
             <h1>🚀 RAM Goal Tracker</h1>
-            
             <img src="ram.jpg" alt="Target RAM" class="ram-display" onerror="this.style.display='none'">
-            
             <span>Target: 8GB / 16GB DDR4</span>
         </div>
 
         <div class="balance-card">
-            <div class="balance-title">Total Tabungan (Est)</div>
+            <div class="balance-title">Total Tabungan Real</div>
             <div class="balance-amount">$<span id="currentBalance">0.00</span></div>
-            <span class="profit-tag">Status: WIN STREAK (2-0) 🔥</span>
+            <span class="profit-tag" id="statusText">Calculating...</span>
         </div>
 
         <div class="goal-section">
@@ -153,68 +92,80 @@
             </div>
         </div>
 
-       <h3>Riwayat Trade</h3>
-        
+        <h3>Riwayat Trade</h3>
         <ul class="history-list" id="riwayat-otomatis">
             <li>Loading data...</li>
         </ul>
         <br>
 
-        <a href="bukti.html" class="btn-link">📂 TRADE </a>
+        <a href="bukti.html" class="btn-link">📂 Lihat Galeri Bukti Cuan</a>
         <button class="btn-refresh" onclick="updateData()">🔄 Sync Data Terbaru</button>
     </div>
-    
-<script>
-        // --- CONFIGURATION ---
-        // Modal Awal (Saldo sebelum profit hari ini)
-        const modalAwal = 6.82; 
+
+    <script>
+        // --- KONFIGURASI UTAMA ---
+        // Modal Awal kamu di Tanggal 1 Des (Sebelum trade apapun)
+        const modalAwal = 7.51; 
         const hargaRAM = 45.00;
 
         async function updateData() {
             try {
-                // 1. Ambil Database
                 const response = await fetch('data.json');
                 const data = await response.json();
 
-                // 2. Siapkan Wadah
                 let totalCuan = 0;
                 const listWadah = document.getElementById('riwayat-otomatis');
                 listWadah.innerHTML = ''; 
 
-                // 3. LOOPING
+                // LOOPING DATA
                 data.forEach(trade => {
-                    // Hitung Total Saldo (Tetap jalan di background)
-                    if (trade.cuan) {
-                        totalCuan += trade.cuan;
-                    }
+                    // 1. Hitung Total Cuan
+                    if (trade.cuan) totalCuan += trade.cuan;
 
-                    // --- BAGIAN INI YANG DIUBAH ---
-                    // Kita hapus "${trade.cuan}" biar cuma persen yang muncul
+                    // 2. Tentukan Warna (Hijau/Merah)
+                    // Kalau cuan >= 0 pakai class 'win', kalau minus pakai 'loss'
+                    const warnaClass = trade.cuan >= 0 ? 'win' : 'loss';
+                    
+                    // 3. Masukkan ke List
+                    // Menampilkan Nama Koin dan "Profit Display" (Persen atau Dollar)
                     const htmlItem = `
                         <li class="history-item">
                             <span>${trade.judul}</span>
-                            <span class="win">${trade.profit}</span>
+                            <span class="${warnaClass}">${trade.profit}</span>
                         </li>
                     `;
                     listWadah.innerHTML += htmlItem;
                 });
 
-                // 4. Update Saldo & Progress Bar
+                // 4. Update Saldo Akhir
                 const saldoAkhir = modalAwal + totalCuan;
                 
                 document.getElementById('currentBalance').innerText = saldoAkhir.toFixed(2);
                 
+                // Update Progress
                 let progress = (saldoAkhir / hargaRAM) * 100;
                 if(progress > 100) progress = 100;
                 
                 document.getElementById('ramProgress').style.width = progress + "%";
                 document.getElementById('progressText').innerText = progress.toFixed(1) + "%";
 
-                console.log("System Updated. Privacy Mode Active.");
+                // Update Status Tag
+                const statusElem = document.getElementById('statusText');
+                if(totalCuan >= 0) {
+                    statusElem.innerText = `All Time Profit: +$${totalCuan.toFixed(2)} 🔥`;
+                    statusElem.style.color = '#3fb950';
+                    statusElem.style.backgroundColor = 'rgba(63, 185, 80, 0.2)';
+                } else {
+                    statusElem.innerText = `All Time Loss: -$${Math.abs(totalCuan).toFixed(2)} ⚠️`;
+                    statusElem.style.color = '#f85149';
+                    statusElem.style.backgroundColor = 'rgba(248, 81, 73, 0.2)';
+                }
+
+                console.log("System Updated. Balance: " + saldoAkhir);
 
             } catch (error) {
                 console.error("Error:", error);
-                document.getElementById('riwayat-otomatis').innerHTML = '<li style="color:red">Gagal baca data.json</li>';
+                document.getElementById('riwayat-otomatis').innerHTML = '<li style="color:red">Error baca data.json</li>';
             }
         }
 
@@ -222,11 +173,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
