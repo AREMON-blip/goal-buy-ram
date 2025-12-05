@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Trader Dashboard | RAM Goal</title>
+    <style>
+        /* --- CSS (The Skin) --- */
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent-green: #238636; /* Warna Profit */
+            --accent-red: #da3633;   /* Warna Loss */
+            --neon-blue: #58a6ff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Consolas', 'Courier New', monospace; /* Font ala Coder */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 400px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            border: 1px solid #30363d;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 { margin: 0; font-size: 1.5rem; color: var(--neon-blue); }
+        .header span { font-size: 0.8rem; color: var(--text-secondary); }
+
+        .balance-card {
+            background: linear-gradient(145deg, #1c2128, #11151c);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-green);
+        }
+
+        .balance-title { font-size: 0.9rem; color: var(--text-secondary); }
+        .balance-amount { font-size: 2.5rem; font-weight: bold; margin: 10px 0; }
+        .profit-tag { 
+            background-color: rgba(35, 134, 54, 0.2); 
+            color: #3fb950; 
+            padding: 2px 8px; 
+            border-radius: 4px; 
+            font-size: 0.8rem;
+        }
+
+        .goal-section { margin-bottom: 20px; }
+        .goal-label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px; }
+        
+        .progress-bar-bg {
+            background-color: #30363d;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background-color: var(--neon-blue);
+            height: 100%;
+            width: 0%; /* Nanti diisi JS */
+            transition: width 1s ease-in-out;
+        }
+
+        .history-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #21262d;
+            font-size: 0.9rem;
+        }
+
+        .history-item:last-child { border-bottom: none; }
+        .win { color: #3fb950; }
+        .loss { color: var(--accent-red); }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-green);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        .btn:hover { background-color: #2ea043; }
+
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <div class="header">
+            <h1>🚀 RAM Goal Tracker</h1>
+            <span>Target: 8GB / 16GB DDR4</span>
+        </div>
+
+        <div class="balance-card">
+            <div class="balance-title">Total Tabungan (Est)</div>
+            <div class="balance-amount">$<span id="currentBalance">0.00</span></div>
+            <span class="profit-tag">Win Rate: 100% (Hari Ini)</span>
+        </div>
+
+        <div class="goal-section">
+            <div class="goal-label">
+                <span>Progress Beli RAM ($45 Target)</span>
+                <span id="progressText">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="ramProgress"></div>
+            </div>
+        </div>
+
+        <h3>Riwayat Hari Ini</h3>
+        <ul class="history-list">
+            <li class="history-item">
+                <span>RESOLV/USDT (Short)</span>
+                <span class="win">+ $0.59 (45%)</span> </li>
+            <li class="history-item">
+                <span>BOB/USDT (Short)</span>
+                <span class="win">+ $0.18 (17.9%)</span> </li>
+        </ul>
+
+        <button class="btn" onclick="updateData()">🔄 Sync Data Terbaru</button>
+    </div>
+
+    <script>
+        // --- JavaScript (The Brain) ---
+        
+        // Data Simulasi (Bisa diganti nanti pake database beneran)
+        let totalSaldo = 10.00; // Misal saldo awal $10
+        const profitHariIni = 0.59 + 0.18; // Profit RESOLV + BOB
+        const hargaRAM = 45.00; // Harga RAM kisaran Rp700rb-an ($45)
+
+        function updateData() {
+            // Update Saldo
+            let currentTotal = totalSaldo + profitHariIni;
+            document.getElementById('currentBalance').innerText = currentTotal.toFixed(2);
+
+            // Hitung Persentase ke Goal
+            let progress = (currentTotal / hargaRAM) * 100;
+            
+            // Batasi max 100% biar ga tumpah
+            if(progress > 100) progress = 100;
+
+            // Animasi Bar
+            document.getElementById('ramProgress').style.width = progress + "%";
+            document.getElementById('progressText').innerText = progress.toFixed(1) + "%";
+
+            // Efek visual console (Ala Hacker)
+            console.log("System Updated...");
+            console.log("New Balance: " + currentTotal);
+        }
+
+        // Jalankan otomatis pas web dibuka
+        setTimeout(updateData, 500);
+
+    </script>
+</body>
+</html>
