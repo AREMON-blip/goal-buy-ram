@@ -1,13 +1,15 @@
 [
     {
         "judul": "🔥 RESOLV/USDT",
-        "profit": "+45%",
+        "profit": "+44.33%",
+        "cuan": 0.59,
         "gambar": "resolv.jpg",
         "catatan": "Sniper entry di pucuk resistance."
     },
     {
         "judul": "🛡️ BOB/USDT",
-        "profit": "+17.9%",
+        "profit": "+17.81%",
+        "cuan": 0.17,
         "gambar": "bob.jpg",
         "catatan": "Disiplin cut manual saat BTC pump."
     }
